@@ -1,0 +1,847 @@
+/* 
+   SOTO del PRIOR - Bold & Horizontal Redesign
+   Concept: "Provocative Luxury" (Vicio) + Horizontal Flow (Dani Garcia)
+   Palette: Cardinal Red, Jet Black, Paper White.
+*/
+
+:root {
+    /* --- Palette: Bold, High Contrast --- */
+    --color-bg: #F4F4F4;
+    /* Light Grey base */
+    --color-bg-dark: #0A0A0A;
+    --color-text: #0A0A0A;
+    --color-text-inverse: #FFFFFF;
+
+    /* ACCENT GOLD */
+    --color-accent: #C59D5F;
+
+    /* --- Typography: Giant & Loud --- */
+    --font-heading: 'Oswald', sans-serif;
+    --font-body: 'Lato', sans-serif;
+
+    /* --- Metrics --- */
+    --header-height: 80px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    overflow-x: hidden;
+    /* We handle scroll specifically */
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+}
+
+/* --- Navigation (Fixed) --- */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background: rgba(255, 255, 255, 0.95);
+    /* Permanent background */
+    z-index: 1000;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.3s, color 0.6s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+
+
+.site-logo {
+    height: 50px;
+    filter: brightness(0);
+    /* Force black logo */
+    transition: filter 0.6s ease;
+    /* Smooth logo inversion */
+}
+
+.nav-list {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 900;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.6s ease;
+    /* Smooth text color change */
+}
+
+.nav-list a:hover {
+    color: var(--color-accent);
+}
+
+.header-cta .btn {
+    background: var(--color-accent);
+    color: #FFF;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    /* Ensure no underline for <a> */
+    display: inline-block;
+    /* Good practice for links as buttons */
+}
+
+/* --- HORIZONTAL MAIN WRAPPER --- */
+.horizontal-scroller {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scroll-behavior: smooth;
+    height: 100vh;
+    width: 100vw;
+    scrollbar-width: none;
+    /* Hide scrollbar Firefox */
+}
+
+.horizontal-scroller::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar Chrome/Safari */
+}
+
+/* --- GENERIC SECTION --- */
+.h-section {
+    flex: 0 0 100vw;
+    /* Full width */
+    height: 100vh;
+    /* Full height */
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    /* Centering content by default */
+}
+
+/* --- HERO SECTION --- */
+.hero-section {
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #FFF;
+    max-width: 90%;
+}
+
+.hero-title {
+    font-size: 8rem;
+    /* VICIO STYLE: HUGE */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    letter-spacing: 0.2em;
+    background: var(--color-accent);
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    color: #FFF;
+}
+
+/* --- SPLIT SECTIONS (Text + Image) --- */
+.split-layout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.split-text {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 9rem 6rem 6rem;
+    /* Increased top padding to clear header */
+    background: #FFF;
+    z-index: 2;
+}
+
+.split-visual {
+    width: 50%;
+    height: 100%;
+    position: relative;
+}
+
+.split-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Typography in Split Sections */
+.big-lead {
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    color: var(--color-text);
+    margin-bottom: 2rem;
+    line-height: 0.85;
+}
+
+.description {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+    max-width: 500px;
+}
+
+/* Philosophy Section (ORIGIN) - Dark Background */
+.philosophy-section {
+    background: #000;
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 2rem;
+}
+
+.philosophy-section .big-lead {
+    color: #FFF;
+    /* Ensure title is white */
+}
+
+.philosophy-section .description {
+    color: #CCC;
+    /* Ensure description is light grey */
+}
+
+.btn-link {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* --- SPECIFIC MODIFIERS --- */
+
+/* Philosophy - Dark Mode */
+.philosophy-section {
+    background-color: var(--color-bg-dark);
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem;
+}
+
+.philosophy-section .big-lead {
+    color: #FFF;
+    font-size: 6rem;
+}
+
+.philosophy-section .description {
+    color: #CCC;
+}
+
+/* Obrador - Reverse Layout usually looks good, but let's keep standard L/R for flow */
+
+/* --- FOOTER IN HORIZONTAL FLOW --- */
+.end-section {
+    background-color: var(--color-accent);
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-logo {
+    max-height: 80px;
+    /* Keep height constraint but rely on width for alignment */
+    width: 300px;
+    /* Fixed width for alignment reference */
+    object-fit: contain;
+    margin-bottom: 2rem;
+    filter: brightness(0) invert(1);
+}
+
+.end-links {
+    display: flex;
+    width: 300px;
+    /* MATCHES footer-logo width */
+    justify-content: space-between;
+    /* Spreads icons to edges */
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.end-links a {
+    color: #FFF;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 0;
+    /* Fix anchor height */
+}
+
+
+
+
+.social-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    filter: brightness(0) invert(1);
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+
+.end-links a:hover .social-icon {
+    transform: scale(1.1);
+}
+
+/* --- MODAL STYLES --- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    /* Dark overlay */
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: #FFF;
+    padding: 3rem;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) .modal-content {
+    transform: translateY(0);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text);
+}
+
+.modal-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 1rem;
+    border: 1px solid #CCC;
+    font-family: var(--font-body);
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+.btn-submit {
+    width: 100%;
+    background: var(--color-accent);
+    color: #FFF;
+    border: none;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: #a9834b;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- BOOKING WIDGET --- */
+.booking-widget-container {
+    width: 100%;
+    margin-top: 1rem;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-logo {
+    max-height: 80px;
+    /* Keep height constraint but rely on width for alignment */
+    width: 300px;
+    /* Fixed width for alignment reference */
+    object-fit: contain;
+    margin-bottom: 2rem;
+    filter: brightness(0) invert(1);
+}
+
+.end-links {
+    display: flex;
+    width: 300px;
+    /* MATCHES footer-logo width */
+    justify-content: space-between;
+    /* Spreads icons to edges */
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.end-links a {
+    color: #FFF;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 0;
+    /* Fix anchor height */
+}
+
+
+
+
+.social-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    filter: brightness(0) invert(1);
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+
+.end-links a:hover .social-icon {
+    transform: scale(1.1);
+}
+
+/* --- MODAL STYLES --- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    /* Dark overlay */
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: #FFF;
+    padding: 3rem;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) .modal-content {
+    transform: translateY(0);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text);
+}
+
+.modal-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 1rem;
+    border: 1px solid #CCC;
+    font-family: var(--font-body);
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+.btn-submit {
+    width: 100%;
+    background: var(--color-accent);
+    color: #FFF;
+    border: none;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: #a9834b;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- BOOKING WIDGET --- */
+.booking-widget-container {
+    width: 100%;
+    margin-top: 1rem;
+    overflow: hidden;
+    border-radius: 4px;
+    /* Optional slight rounding */
+}
+
+.booking-widget-container iframe {
+    display: block;
+    /* Remove inline-block spacing */
+    border: none;
+}
+
+/* --- PRODUCT CARDS (GIFT VOUCHERS) --- */
+.product-grid {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.product-card {
+    flex: 1;
+    border: 1px solid #CCC;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.product-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+}
+
+.product-detail {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.product-price {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.btn-product {
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 0.8rem 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-product:hover {
+    background: var(--color-accent);
+    color: #FFF;
+}
+
+/* --- HORIZONTAL DARK PRODUCT CARD (CUSTOM) --- */
+.product-card--horizontal {
+    flex-direction: row;
+    align-items: center;
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.3);
+    padding: 1rem 2.5rem;
+    text-align: left;
+    width: fit-content;
+    margin: 2rem auto 0;
+    max-width: 95%;
+    gap: 2rem;
+
+    /* PREVENT STRETCHING */
+    flex: none;
+    height: auto;
+}
+
+.product-card--horizontal h3 {
+    color: #FFF;
+    margin-bottom: 0.2rem;
+}
+
+.product-card--horizontal .product-detail {
+    color: #CCC;
+    margin-bottom: 0;
+}
+
+.product-card--horizontal .product-price {
+    color: var(--color-accent);
+    margin-bottom: 0;
+    margin-right: 1rem;
+    font-size: 2rem;
+}
+
+.product-card--horizontal .card-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.product-card--horizontal .btn-product {
+    width: auto;
+    padding: 0.8rem 2rem;
+    border-color: #FFF;
+    color: #FFF;
+}
+
+.product-card--horizontal .btn-product:hover {
+    background: #FFF;
+    color: #000;
+    border-color: #FFF;
+}
+
+/* --- MOBILE & RESPONSIVE REFINEMENTS --- */
+@media (max-width: 900px) {
+
+    /* 1. Layout Adjustments */
+    .horizontal-scroller {
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: auto;
+        scroll-snap-type: y mandatory;
+    }
+
+    .h-section {
+        flex: 0 0 auto;
+        height: auto;
+        min-height: 100vh;
+        width: 100%;
+        scroll-snap-align: start;
+    }
+
+    .split-layout {
+        flex-direction: column-reverse;
+        /* Image on top usually better for mobile flow */
+    }
+
+    /* 2. Text/Content Sections Padding */
+    .split-text {
+        width: 100%;
+        height: auto;
+        /* Remove fixed height */
+        min-height: 50vh;
+        /* Ensure visual balance */
+        padding: 7rem 2rem 4rem;
+        /* Top padding clears fixed header (80px ~ 5rem) + buffer */
+    }
+
+    .split-visual {
+        width: 100%;
+        height: 50vh;
+        /* Visuals take half screen or so */
+    }
+
+    /* 3. Typography Scaling */
+    .hero-title {
+        font-size: 3.5rem;
+    }
+
+    .big-lead {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    /* 4. Product Grid Stacking */
+    .product-grid {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    /* 5. Philosophy/Origen Adjustment */
+    .philosophy-section {
+        padding: 7rem 1.5rem 4rem;
+        /* Same top clearance for header */
+    }
+
+    .philosophy-section .big-lead {
+        font-size: 3rem;
+        /* Scale down from huge desktop size */
+    }
+
+    /* 6. Horizontal Card Mobile */
+    .product-card--horizontal {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+        padding: 2rem;
+    }
+
+    .product-card--horizontal .card-actions {
+        margin-left: 0;
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    .product-card--horizontal .product-price {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+}

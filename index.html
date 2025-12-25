@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOTO del PRIOR | Origen y Calidad Suprema</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Oswald:wght@300;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header (Fixed) -->
+    <header class="site-header">
+        <a href="#" class="logo-link">
+            <img src="assets/logo_horizontal.png" alt="SOTO del PRIOR Logo" class="site-logo">
+        </a>
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li><a href="#restaurante">RESTAURANTE</a></li>
+                <li><a href="#eventos">EVENTOS</a></li>
+                <li><a href="#alojamiento">ESTANCIA</a></li>
+                <li><a href="#obrador">OBRADOR</a></li>
+                <li><a href="#origen">ORIGEN</a></li>
+            </ul>
+        </nav>
+        <div class="header-cta">
+            <a href="#contacto" class="btn">CONTACTO</a>
+        </div>
+    </header>
+
+    <!-- HORIZONTAL SCROLL CONTAINER -->
+    <div class="horizontal-scroller">
+
+        <!-- 1. HERO -->
+        <section class="h-section hero-section" id="inicio">
+            <div class="hero-bg">
+                <img src="assets/hero_landscape_clean.png" alt="Paisaje Soto del Prior">
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">ANTES QUE COCINEROS,<br>SOMOS GANADEROS.</h1>
+
+            </div>
+        </section>
+
+        <!-- 2. RESTAURANTE (Split Alt) -->
+        <section class="h-section split-layout" id="restaurante">
+            <div class="split-text">
+                <h2 class="big-lead">HIERRO &amp; CIERZO.</h2>
+                <p class="description">
+                    Producto de temporada. De nuestra huerta al plato.
+                    Sabores puros, sin artificios. La esencia de la tierra.
+                </p>
+                <!-- CoverManager Booking Engine -->
+                <div class="booking-widget-container">
+                    <iframe src="https://www.covermanager.com/reservation/module_restaurant/sotodelprior/spanish"
+                        frameborder="0" height="550" width="100%" title="Reserva tu mesa"></iframe>
+                </div>
+            </div>
+            <div class="split-visual">
+                <img src="assets/img_restaurante.png" alt="Tomate Confitado Soto del Prior">
+            </div>
+        </section>
+
+        <!-- 3. EVENTOS (Formerly Granja) -->
+        <section class="h-section split-layout" id="eventos">
+            <div class="split-text">
+                <h2 class="big-lead">EVENTOS.</h2>
+                <p class="description">
+                    Celebraciones privadas. Rodajes. Presentaciones de marca.
+                    Un entorno único para momentos que exigen distinción y privacidad absoluta.
+                </p>
+                <a href="#" class="btn-link" id="trigger-event-modal">ORGANIZAR EVENTO</a>
+            </div>
+            <div class="split-visual">
+                <img src="assets/img_eventos.png" alt="Eventos y Bodas Soto del Prior">
+            </div>
+        </section>
+
+        <!-- 4. ALOJAMIENTO (Split) -->
+        <section class="h-section split-layout" id="alojamiento">
+            <div class="split-visual">
+                <img src="assets/bedroom.png" alt="Habitación Rural">
+            </div>
+            <div class="split-text">
+                <h2 class="big-lead">SILENCIO.</h2>
+                <p class="description">
+                    Desconectar para reconectar. Madera, piedra y vistas a la sierra.
+                    Una estancia de lujo rural donde el único ruido es el viento.
+                </p>
+                <!-- Avirato Booking Engine -->
+                <div class="booking-widget-container">
+                    <iframe src="https://booking.avirato.com/?code=SotoDelPriorDemo" frameborder="0" height="550"
+                        width="100%" title="Reserva tu estancia"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. OBRADOR (Split) -->
+        <section class="h-section split-layout" id="obrador">
+            <div class="split-visual">
+                <img src="assets/bread.png" alt="Pan Artesano">
+            </div>
+            <div class="split-text">
+                <h2 class="big-lead">REGALA.</h2>
+                <p class="description">
+                    Porque lo auténtico se comparte. Sorprende con una experiencia gastronómica inolvidable o con el
+                    sabor puro de nuestra tierra.
+                </p>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <h3>MENÚ DEGUSTACIÓN</h3>
+                        <p class="product-detail">6 Pases</p>
+                        <p class="product-price">70€</p>
+                        <button class="btn-product">COMPRAR</button>
+                    </div>
+                    <div class="product-card">
+                        <h3>PACK ARTESANAL</h3>
+                        <p class="product-detail">Chorizo, salchichón y cecina de buey de bellota</p>
+                        <p class="product-price">50€</p>
+                        <button class="btn-product">COMPRAR</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. ORIGEN (Formerly Filosofía) -->
+        <section class="h-section philosophy-section" id="origen">
+            <h2 class="big-lead">NO BUSCAMOS LA PERFECCIÓN. <br>BUSCAMOS LA VERDAD.</h2>
+            <!-- Moved Product Card (Horizontal/Dark) -->
+            <div class="product-card product-card--horizontal">
+                <div class="card-info">
+                    <h3>VISITA A LA GRANJA</h3>
+                    <p class="product-detail">Experiencia guiada</p>
+                </div>
+                <div class="card-actions">
+                    <p class="product-price">20€</p>
+                    <button class="btn-product">COMPRAR</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. FOOTER / END -->
+        <section class="h-section end-section" id="contacto">
+            <img src="assets/logo_text.png" alt="SOTO DEL PRIOR" class="footer-logo">
+            <div class="end-links">
+                <a href="https://www.instagram.com/sotodelprior/" target="_blank"><img src="assets/icon_instagram.svg"
+                        alt="Instagram" class="social-icon"></a>
+                <a href="https://www.tiktok.com/@sotodelprior" target="_blank"><img src="assets/icon_tiktok.svg"
+                        alt="TikTok" class="social-icon"></a>
+                <a href="#" id="trigger-contact-modal"><img src="assets/icon_mail.svg" alt="Contacto"
+                        class="social-icon"></a>
+                <a href="#"><img src="assets/icon_phone.svg" alt="Teléfono" class="social-icon"></a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.7;">© 2024 TODOS LOS DERECHOS RESERVADOS</p>
+        </section>
+
+    </div>
+    <!-- CONTACT MODAL -->
+    <div id="contact-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="close-modal" class="close-btn">&times;</button>
+            <h2 class="modal-title">CONTACTO</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="contact-name">NOMBRE</label>
+                    <input type="text" id="contact-name" name="name" required placeholder="Tu nombre">
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">CORREO DE CONTACTO</label>
+                    <input type="email" id="contact-email" name="email" required placeholder="tucorreo@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">MENSAJE</label>
+                    <textarea id="contact-message" name="message" rows="4" required
+                        placeholder="¿En qué podemos ayudarte?"></textarea>
+                </div>
+
+                <!-- CAPTCHA -->
+                <div class="form-group captcha-group">
+                    <label for="captcha-input">¿Cuánto es <span id="captcha-question">2 + 3</span>?</label>
+                    <input type="number" id="captcha-input" required placeholder="Respuesta">
+                </div>
+
+                <button type="submit" class="btn-submit">ENVIAR</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -16,27 +16,33 @@
     --color-accent: #C59D5F;
 
     /* --- Typography: Giant & Loud --- */
-    --font-heading: 'Oswald', sans-serif;
-    --font-body: 'Lato', sans-serif;
+    /* Fonts managed by next/font in layout.tsx */
+
 
     /* --- Metrics --- */
     --header-height: 80px;
 }
 
-* {
+/* UNIVERSAL RESET REMOVED - Managed by Tailwind in globals.css */
+/* * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
+} */
 
-body {
+.web-root {
     font-family: var(--font-body);
     background-color: var(--color-bg);
     color: var(--color-text);
-    overflow-x: hidden;
-    /* We handle scroll specifically */
-    height: 100vh;
+    /* LOCK VIEWPORT */
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+
     display: flex;
     flex-direction: column;
 }
@@ -141,6 +147,8 @@ h3 {
     overflow: hidden;
     display: flex;
     /* Centering content by default */
+    background-color: #FFF;
+    /* Fix overlap transparency issue */
 }
 
 /* --- HERO SECTION --- */
@@ -204,14 +212,26 @@ h3 {
 
 .split-text {
     width: 50%;
-    height: 100%;
+    height: 100vh;
+    /* Keep 100vh for desktop split feel */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 9rem 6rem 6rem;
-    /* Increased top padding to clear header */
+    justify-content: flex-start;
+    /* Center content vertically */
+    padding: 120px 4rem 2rem;
     background: #FFF;
     z-index: 2;
+    overflow: hidden;
+    /* STRICT: No scroll on desktop */
+    position: relative;
+
+    /* Hide Scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.split-text::-webkit-scrollbar {
+    display: none;
 }
 
 .split-visual {
@@ -229,16 +249,16 @@ h3 {
 /* Typography in Split Sections */
 .big-lead {
     font-family: var(--font-heading);
-    font-size: 5rem;
+    font-size: 3.5rem;
     color: var(--color-text);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     line-height: 0.85;
 }
 
 .description {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #666;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     max-width: 500px;
 }
 
@@ -269,7 +289,7 @@ h3 {
     font-weight: 900;
     color: var(--color-accent);
     text-transform: uppercase;
-    text-decoration: underline;
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -368,7 +388,7 @@ h3 {
     transition: opacity 0.3s ease;
 }
 
-.modal-overlay:not(.hidden) {
+.modal-overlay:not(.modal-hidden) {
     opacity: 1;
     pointer-events: auto;
 }
@@ -384,7 +404,7 @@ h3 {
     transition: transform 0.3s ease;
 }
 
-.modal-overlay:not(.hidden) .modal-content {
+.modal-overlay:not(.modal-hidden) .modal-content {
     transform: translateY(0);
 }
 
@@ -451,7 +471,7 @@ h3 {
     background: #a9834b;
 }
 
-.hidden {
+.modal-hidden {
     opacity: 0;
     pointer-events: none;
 }
@@ -460,165 +480,6 @@ h3 {
 .booking-widget-container {
     width: 100%;
     margin-top: 1rem;
-    overflow: hidden;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.footer-logo {
-    max-height: 80px;
-    /* Keep height constraint but rely on width for alignment */
-    width: 300px;
-    /* Fixed width for alignment reference */
-    object-fit: contain;
-    margin-bottom: 2rem;
-    filter: brightness(0) invert(1);
-}
-
-.end-links {
-    display: flex;
-    width: 300px;
-    /* MATCHES footer-logo width */
-    justify-content: space-between;
-    /* Spreads icons to edges */
-    align-items: center;
-    margin-top: 1rem;
-}
-
-.end-links a {
-    color: #FFF;
-    font-weight: 700;
-    font-size: 1.5rem;
-    line-height: 0;
-    /* Fix anchor height */
-}
-
-
-
-
-.social-icon {
-    width: 2.5rem;
-    height: 2.5rem;
-    filter: brightness(0) invert(1);
-    vertical-align: middle;
-    transition: transform 0.3s ease;
-}
-
-.end-links a:hover .social-icon {
-    transform: scale(1.1);
-}
-
-/* --- MODAL STYLES --- */
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    /* Dark overlay */
-    backdrop-filter: blur(5px);
-    z-index: 2000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.modal-overlay:not(.hidden) {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal-content {
-    background: #FFF;
-    padding: 3rem;
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
-}
-
-.modal-overlay:not(.hidden) .modal-content {
-    transform: translateY(0);
-}
-
-.close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-text);
-}
-
-.modal-title {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    color: var(--color-text);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-}
-
-.form-group input,
-.form-group textarea {
-    padding: 1rem;
-    border: 1px solid #CCC;
-    font-family: var(--font-body);
-    font-size: 1rem;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--color-accent);
-}
-
-.btn-submit {
-    width: 100%;
-    background: var(--color-accent);
-    color: #FFF;
-    border: none;
-    padding: 1rem;
-    font-size: 1.2rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.btn-submit:hover {
-    background: #a9834b;
-}
-
-.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* --- BOOKING WIDGET --- */
-.booking-widget-container {
-    width: 100%;
-    margin-top: 1rem;
-    overflow: hidden;
     border-radius: 4px;
     /* Optional slight rounding */
 }
@@ -647,6 +508,17 @@ h3 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
+    /* Center content */
+}
+
+/* Vertical Card Image */
+.product-card img {
+    width: 100%;
+    max-width: 250px;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 1rem;
 }
 
 .product-card:hover {
@@ -713,6 +585,17 @@ h3 {
     height: auto;
 }
 
+/* Horizontal Card Image specific */
+.product-card--horizontal img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    /* Optional polish */
+    margin-bottom: 0;
+    margin-right: 1.5rem;
+}
+
 .product-card--horizontal h3 {
     color: #FFF;
     margin-bottom: 0.2rem;
@@ -765,83 +648,235 @@ h3 {
         flex: 0 0 auto;
         height: auto;
         min-height: 100vh;
+        /* Fallback */
+        min-height: 100dvh;
+        /* Dynamic viewport height */
         width: 100%;
         scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        scroll-margin-top: 0;
+        padding-top: var(--header-height);
+        box-sizing: border-box;
+
+        /* Default background for generic sections */
+        background-color: var(--color-bg);
+        position: relative;
+        z-index: 10;
+
+        margin-bottom: 0px;
     }
 
     .split-layout {
         flex-direction: column-reverse;
-        /* Image on top usually better for mobile flow */
+        height: auto;
+        min-height: auto;
+        flex-grow: 1;
     }
 
     /* 2. Text/Content Sections Padding */
     .split-text {
         width: 100%;
         height: auto;
-        /* Remove fixed height */
-        min-height: 50vh;
-        /* Ensure visual balance */
-        padding: 7rem 2rem 4rem;
-        /* Top padding clears fixed header (80px ~ 5rem) + buffer */
+        /* Allow correct height on mobile */
+        min-height: 100dvh;
+        /* Minimum height for text area */
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        /* Align content to top */
+        padding: 6rem 1.5rem 4rem;
+        /* Fixed top padding for alignment, increased to clear header (80px) */
+        background: #FFF;
     }
 
     .split-visual {
         width: 100%;
-        height: 50vh;
-        /* Visuals take half screen or so */
+        height: 40vh;
+        min-height: 250px;
+        flex-shrink: 0;
+    }
+
+    .split-visual img {
+        object-position: center;
+        height: 100%;
+        width: 100%;
     }
 
     /* 3. Typography Scaling */
     .hero-title {
-        font-size: 3.5rem;
+        font-size: 3rem;
     }
 
     .big-lead {
-        font-size: 3rem;
-        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
     }
 
+    /* HIDE DESCRIPTION ON MOBILE */
     .description {
-        font-size: 1rem;
-        margin-bottom: 2rem;
+        display: none;
     }
 
-    /* 4. Product Grid Stacking */
+    /* Adjust product grid for mobile */
     .product-grid {
         flex-direction: column;
-        gap: 2rem;
+        gap: 1rem;
     }
 
-    /* 5. Philosophy/Origen Adjustment */
+    .product-card {
+        padding: 1.5rem;
+    }
+
+    /* Hero Section Specifics */
+    .hero-section {
+        padding-top: 0;
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    .hero-content {
+        padding-top: var(--header-height);
+    }
+
+    /* FIX: PHILOSOPHY (ORIGEN) SECTION ON MOBILE */
     .philosophy-section {
-        padding: 7rem 1.5rem 4rem;
-        /* Same top clearance for header */
+        background-color: var(--color-bg-dark) !important;
+        /* Force Black */
+        color: #FFF;
+        justify-content: center;
+        padding: 4rem 1.5rem;
+        /* Adjust padding */
     }
 
     .philosophy-section .big-lead {
-        font-size: 3rem;
-        /* Scale down from huge desktop size */
+        font-size: 2.5rem;
+        /* Smaller font for mobile */
+        color: #FFF;
+        line-height: 1;
     }
 
-    /* 6. Horizontal Card Mobile */
+    /* FIX: HORIZONTAL PRODUCT CARD ON MOBILE */
     .product-card--horizontal {
         flex-direction: column;
-        text-align: center;
-        gap: 1.5rem;
         width: 100%;
         max-width: 100%;
-        padding: 2rem;
+        text-align: center;
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .product-card--horizontal img {
+        margin-right: 0;
+        margin-bottom: 1rem;
+        width: 120px;
+        height: 120px;
     }
 
     .product-card--horizontal .card-actions {
         margin-left: 0;
-        flex-direction: column;
+        margin-top: 1rem;
         width: 100%;
-        gap: 1rem;
+        justify-content: center;
     }
 
-    .product-card--horizontal .product-price {
-        margin-right: 0;
+    .product-card--horizontal .btn-product {
+        width: 100%;
+    }
+
+    /* FIX: STACKING ORDER FOR SECTIONS WHERE VISUAL IS FIRST IN DOM */
+    /* #alojamiento (Silencio) has <div class="split-visual"> first. */
+    /* We want Visual Top, Text Bottom for it. */
+    /* For #obrador (Regala), we remove it so it uses default column-reverse (Text Top) */
+    #alojamiento.split-layout {
+        flex-direction: column;
+    }
+
+    /* FIX: BOOKING WIDGET ON MOBILE */
+    .booking-widget-container iframe {
+        height: 400px;
+        /* Reduce height from 600px */
+        max-height: 50vh;
+    }
+
+    /* FIX: HIDE IMAGE IN OBRADOR (REGALA) SECTION ON MOBILE */
+    #obrador .split-visual {
+        display: none;
+    }
+
+    /* COMPACT OBRADOR (REGALA) FOR MOBILE FIT */
+    #obrador .split-text {
+        padding-top: 6rem;
+        padding-bottom: 1rem;
+        justify-content: flex-start;
+    }
+
+    #obrador .product-grid {
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    #obrador .product-card {
+        padding: 1rem;
+    }
+
+    #obrador .product-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+    #obrador .product-card .product-detail {
+        font-size: 0.9rem;
         margin-bottom: 0.5rem;
+    }
+
+    #obrador .product-card .product-price {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    #obrador .product-card .btn-product {
+        padding: 0.6rem;
+    }
+
+    /* FIX: CONTACT SECTION SCROLL SNAP */
+    /* Ensure it snaps below the header without showing previous section in a gap */
+    #contacto {
+        scroll-margin-top: var(--header-height);
+        /* Snap below header */
+        padding-top: 4rem;
+        /* Ensure some internal spacing */
+        padding-bottom: 4rem;
+        min-height: 100dvh;
+        /* Make it a full section for cleaner snap */
+        background-color: var(--color-accent) !important;
+        /* Force Gold */
+        justify-content: center;
+        z-index: 20;
+        /* Ensure it lies on top if overlap occurs */
+    }
+
+    /* FIX: MODAL ON MOBILE */
+    .modal-content {
+        width: 95%;
+        padding: 4rem 1.5rem 2rem;
+        /* Increase top padding for 'X' button space */
+        max-height: 90vh;
+        /* Prevent overflowing screen height */
+        overflow-y: auto;
+        /* Allow scrolling inside modal if needed */
+        margin-top: 2rem;
+        /* Ensure visual gap from top */
+    }
+
+    .close-btn {
+        top: 1rem;
+        right: 1rem;
+        padding: 0.5rem;
+        /* Touch target */
+        background: rgba(255, 255, 255, 0.9);
+        /* Ensure visibility */
+        border-radius: 50%;
     }
 }

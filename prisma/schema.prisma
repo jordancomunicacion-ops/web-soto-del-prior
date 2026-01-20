@@ -1,0 +1,191 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  password      String?
+  role          String    @default("EMPLOYEE") // ADMIN, CHEF, EMPLOYEE
+  pinCode       String?   @unique
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  tasks EmployeeTask[]
+}
+
+// --- KITCHEN / INTERNAL MODELS (Existing) ---
+
+model Provider {
+  id        Int       @id @default(autoincrement())
+  name      String
+  contact   String?
+  products  Product[]
+}
+
+model Product {
+  id           Int     @id @default(autoincrement())
+  name         String
+  unitBase     String  // kg, l, ud
+  pricePerUnit Decimal
+  wastePercent Decimal // 0.15 = 15%
+  providerId   Int
+  provider     Provider @relation(fields: [providerId], references: [id])
+
+  recipeIngredients RecipeIngredient[]
+}
+
+model Recipe {
+  id             Int     @id @default(autoincrement())
+  name           String
+  portionsOutput Int     @default(1)
+  
+  ingredients    RecipeIngredient[] // Ingredients used IN this recipe
+  usedInRecipes  RecipeIngredient[] @relation("SubRecipe") // Recipes that use THIS recipe
+  
+  eventDishes    EventDish[]
+  tasks          EmployeeTask[]
+}
+
+model RecipeIngredient {
+  id          Int     @id @default(autoincrement())
+  recipeId    Int
+  recipe      Recipe  @relation(fields: [recipeId], references: [id])
+  
+  // Either product OR subRecipe is set
+  productId   Int?
+  product     Product? @relation(fields: [productId], references: [id])
+  
+  subRecipeId Int?
+  subRecipe   Recipe?  @relation("SubRecipe", fields: [subRecipeId], references: [id])
+  
+  quantity    Decimal // Net quantity required
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  name      String
+  dateEvent DateTime
+  pax       Int
+  
+  dishes    EventDish[]
+}
+
+model EventDish {
+  id       Int     @id @default(autoincrement())
+  eventId  Int
+  event    Event   @relation(fields: [eventId], references: [id])
+  recipeId Int
+  recipe   Recipe  @relation(fields: [recipeId], references: [id])
+  factor   Decimal @default(1.0)
+}
+
+model EmployeeTask {
+  id           Int       @id @default(autoincrement())
+  employeeId   String
+  employee     User      @relation(fields: [employeeId], references: [id])
+  recipeId     Int
+  recipe       Recipe    @relation(fields: [recipeId], references: [id])
+  
+  dateAssigned DateTime
+  timeStart    DateTime?
+  timeEnd      DateTime?
+  status       String    @default("PENDING") // PENDING, IN_PROGRESS, DONE
+}
+
+// --- E-COMMERCE / SHOP MODELS (New) ---
+
+model ShopProduct {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Decimal
+  image       String?
+  category    String   // 'PACK', 'VISIT'
+  createdAt   DateTime @default(now())
+  
+  orderItems  ShopOrderItem[]
+}
+
+model ShopOrder {
+  id        String          @id @default(uuid())
+  customerEmail String
+  customerName  String?
+  phone         String?
+  address       String?
+  city          String?
+  zipCode       String?
+  total     Decimal
+  status    String          // 'PENDING', 'PAID', 'DELIVERED', 'CANCELLED'
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  
+  items     ShopOrderItem[]
+}
+
+model ShopOrderItem {
+  id            String      @id @default(uuid())
+  orderId       String
+  order         ShopOrder   @relation(fields: [orderId], references: [id])
+  productId     String
+  product       ShopProduct @relation(fields: [productId], references: [id])
+  quantity      Int
+  priceAtPurchase Decimal
+}
+
+// --- MARKETING & CRM (New Module) ---
+
+model CustomerProfile {
+  id        String   @id @default(uuid())
+  email     String?  @unique
+  phone     String?
+  firstName String?
+  lastName  String?
+  
+  // Aggregated Stats
+  systemTags     String? // "HOTEL_GUEST", "RESTAURANT_DINER", "SHOP_BUYER"
+  totalSpend     Decimal @default(0)
+  lastInteraction DateTime?
+  
+  // Consent
+  consentEmail    Boolean @default(false)
+  consentWhatsApp Boolean @default(false)
+  
+  campaigns      CampaignLog[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Campaign {
+  id          String   @id @default(uuid())
+  name        String
+  type        String   // "EMAIL", "WHATSAPP"
+  status      String   // "DRAFT", "SCHEDULED", "SENT"
+  subject     String?
+  content     String   // HTML or Template
+  
+  sentCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  
+  logs        CampaignLog[]
+}
+
+model CampaignLog {
+  id          String   @id @default(uuid())
+  campaignId  String
+  campaign    Campaign @relation(fields: [campaignId], references: [id])
+  customerProfileId String
+  customerProfile CustomerProfile @relation(fields: [customerProfileId], references: [id])
+  
+  status      String   // "SENT", "OPENED", "CLICKED", "FAILED"
+  sentAt      DateTime @default(now())
+}

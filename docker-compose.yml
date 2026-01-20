@@ -1,0 +1,33 @@
+networks:
+  proxy-net:
+    external: true
+
+services:
+  web:
+    build: .
+    container_name: web-soto
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=file:/app/db/prod.db
+      - NEXT_PUBLIC_APP_URL=https://www.sotodelprior.com
+      - NODE_ENV=production
+      - AUTH_TRUST_HOST=true
+      - NEXTAUTH_URL=https://sotodelprior.com
+      - NEXTAUTH_SECRET=changeme123unused
+    volumes:
+      - ./db_data:/app/db
+    networks:
+      - proxy-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web-soto.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
+      - "traefik.http.routers.web-soto.entrypoints=websecure"
+      - "traefik.http.routers.web-soto.tls=true"
+      - "traefik.http.routers.web-soto.tls.certresolver=le"
+      - "traefik.http.services.web-soto.loadbalancer.server.port=3000"
+
+      # HTTP -> HTTPS Redirect
+      - "traefik.http.routers.web-soto-http.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
+      - "traefik.http.routers.web-soto-http.entrypoints=web"
+      - "traefik.http.routers.web-soto-http.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"

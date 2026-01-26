@@ -26,8 +26,32 @@ export default async function Home() {
   const packProduct = products.find(p => p.name.includes("Pack"));
   const visitProduct = products.find(p => p.name.includes("Visita"));
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "SOTO del PRIOR",
+    "url": "https://www.sotodelprior.com",
+    "logo": "https://www.sotodelprior.com/web/assets/logo_full.png",
+    "sameAs": [
+      "https://www.instagram.com/sotodelprior/",
+      "https://www.tiktok.com/@sotodelprior"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+34 (Tu Número)",
+      "contactType": "customer service",
+      "areaServed": "ES",
+      "availableLanguage": "Spanish"
+    },
+    "description": "Ganadería propia y restaurante Km0. Venta de carne de buey online."
+  };
+
   return (
     <main className="web-root">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Dynamic Header with Cart State */}
       <StoreHeader />
       <CartSidebar />

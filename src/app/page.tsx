@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma';
 import WebInteractions from './WebInteractions';
 import BuyButton from './BuyButton';
 import StoreHeader from './StoreHeader';
-import CartSidebar from './CartSidebarFinal'; // UPDATED to Final Version
+import CartSidebar from './CartSidebar'; // UPDATED to Final Version
 
 async function getProducts() {
   try {

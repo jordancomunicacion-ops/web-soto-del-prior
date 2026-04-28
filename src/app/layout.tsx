@@ -83,13 +83,14 @@ export default function RootLayout({
               var siteId = "6de8b4c4-21db-4d2b-9fa6-58c3af39f77c";
               var endpoint = "https://crm.sotodelprior.com/api/analytics/track"; 
 
-              // Helper to get/create ID
+              // Helper to get/create ID (Site-specific storage keys)
               function getId(key, storage) {
                   if(!storage) return "";
-                  var id = storage.getItem(key);
+                  var fullKey = key + "_" + siteId.substring(0, 8);
+                  var id = storage.getItem(fullKey);
                   if(!id) {
                       id = Math.random().toString(36).substring(2) + Date.now().toString(36);
-                      storage.setItem(key, id);
+                      storage.setItem(fullKey, id);
                   }
                   return id;
               }
@@ -108,15 +109,23 @@ export default function RootLayout({
                     visitorId: vid,
                     sessionId: sid
                 };
-                fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).catch(console.error);
+                fetch(endpoint, { 
+                    method: "POST", 
+                    mode: "cors",
+                    headers: { "Content-Type": "application/json" }, 
+                    body: JSON.stringify(data) 
+                }).catch(function(e) { console.warn("Analytics Error:", e); });
               }
               track();
 
               var pushState = history.pushState;
-              history.pushState = function() { pushState.apply(history, arguments); track(window.location.pathname); };
+              history.pushState = function() { 
+                  pushState.apply(history, arguments); 
+                  setTimeout(function() { track(window.location.pathname); }, 100); 
+              };
               window.addEventListener('popstate', function() { track(window.location.pathname); });
 
-              // Auto-Tracker
+              // Event Tracker
               window.trackEvent = function(t, d) {
                   var vid = getId('ana_visitor_id', localStorage);
                   var sid = getId('ana_session_id', sessionStorage);
@@ -131,8 +140,11 @@ export default function RootLayout({
                       visitorId: vid,
                       sessionId: sid
                   };
-                  if (navigator.sendBeacon) navigator.sendBeacon(endpoint, new Blob([JSON.stringify(data)], {type:'application/json'}));
-                  else fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).catch(console.error);
+                  if (navigator.sendBeacon) {
+                      navigator.sendBeacon(endpoint, new Blob([JSON.stringify(data)], {type:'application/json'}));
+                  } else {
+                      fetch(endpoint, { method: "POST", mode: "cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).catch(console.error);
+                  }
               };
 
               document.addEventListener('click', function(e) {

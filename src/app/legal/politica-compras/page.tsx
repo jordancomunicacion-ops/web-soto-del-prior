@@ -38,7 +38,7 @@ export default function PurchasePolicy() {
                             <li>El producto recibido no corresponde con el pedido.</li>
                         </ul>
                         <p className="mt-2">
-                            En cualquiera de estos casos, debe notificarlo en un plazo máximo de <strong>12 horas</strong> tras la recepción, enviando fotos del producto a <em>incidencias@sotodelprior.com</em>.
+                            En cualquiera de estos casos, debe notificarlo en un plazo máximo de <strong>12 horas</strong> tras la recepción, enviando fotos del producto a <em>info@sotodelprior.com</em>.
                         </p>
                     </section>
 

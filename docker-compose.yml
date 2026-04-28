@@ -1,11 +1,13 @@
+name: "sotoweb"
+
 networks:
   proxy-net:
     external: true
 
 services:
-  web:
+  sotoweb-main:
     build: .
-    container_name: web-soto
+    container_name: sotoweb-main
     restart: unless-stopped
     environment:
       - DATABASE_URL=file:/app/db/prod.db
@@ -18,16 +20,19 @@ services:
       - ./db_data:/app/db
     networks:
       - proxy-net
+    expose:
+      - "3000"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web-soto.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
-      - "traefik.http.routers.web-soto.entrypoints=websecure"
-      - "traefik.http.routers.web-soto.tls=true"
-      - "traefik.http.routers.web-soto.tls.certresolver=le"
-      - "traefik.http.services.web-soto.loadbalancer.server.port=3000"
-
-      # HTTP -> HTTPS Redirect
-      - "traefik.http.routers.web-soto-http.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
-      - "traefik.http.routers.web-soto-http.entrypoints=web"
-      - "traefik.http.routers.web-soto-http.middlewares=redirect-to-https"
+      # Router HTTPS
+      - "traefik.http.routers.sotoweb-main.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
+      - "traefik.http.routers.sotoweb-main.entrypoints=websecure"
+      - "traefik.http.routers.sotoweb-main.tls=true"
+      - "traefik.http.routers.sotoweb-main.tls.certresolver=le"
+      # Servicio
+      - "traefik.http.services.sotoweb-main.loadbalancer.server.port=3000"
+      # Redirect HTTP -> HTTPS
+      - "traefik.http.routers.sotoweb-main-http.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
+      - "traefik.http.routers.sotoweb-main-http.entrypoints=web"
+      - "traefik.http.routers.sotoweb-main-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"

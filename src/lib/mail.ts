@@ -3,20 +3,25 @@ import nodemailer from 'nodemailer';
 
 // Email Configuration (Ensure these ENV vars are set)
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
+    host: process.env.SMTP_HOST || 'smtp.office365.com',
     port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: false, // true for 465, false for other ports
+    secure: false, // true for 465, false for other ports (STARTTLS for 587)
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
     },
+    tls: {
+        ciphers: 'SSLv3',
+        rejectUnauthorized: false
+    }
 });
 
 export const sendOrderConfirmation = async (order: any, items: any[]) => {
     try {
+        const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER || 'info@sotodelprior.com';
         // 1. Customer Email
         const customerMailOptions = {
-            from: '"SOTO DEL PRIOR" <info@sotodelprior.com>', // Sender address
+            from: `"SOTO DEL PRIOR" <${fromEmail}>`, // Sender address
             to: order.customerEmail, // List of receivers
             subject: `Confirmación de Pedido #${order.id.slice(-6).toUpperCase()}`, // Subject line
             html: `

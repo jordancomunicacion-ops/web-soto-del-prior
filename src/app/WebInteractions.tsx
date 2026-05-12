@@ -132,17 +132,51 @@ function WebInteractionsContent() {
         setIsModalOpen(false);
     };
 
-    // Load Restaurant Widget Script
+    // Section visibility tracking → emits SECTION_VIEW once per session per section
     useEffect(() => {
-        const scriptId = 'soto-widget-script';
-        if (!document.getElementById(scriptId)) {
-            const script = document.createElement('script');
-            script.id = scriptId;
-            script.src = '/scripts/soto-widget.js';
-            script.async = true;
-            document.body.appendChild(script);
-        }
+        const sections: Record<string, string[]> = {
+            obrador: ['menu-degustacion', 'pack-artesanal'],
+            origen: ['visita-granja']
+        };
+        const targets = Object.keys(sections)
+            .map(id => document.getElementById(id))
+            .filter((el): el is HTMLElement => el !== null);
+        if (targets.length === 0) return;
 
+        const seen = new Set<string>();
+        const observer = new IntersectionObserver((entries) => {
+            const w = window as unknown as { trackEvent?: (t: string, d: Record<string, unknown>) => void };
+            if (typeof w.trackEvent !== 'function') return;
+            for (const entry of entries) {
+                const id = entry.target.id;
+                if (entry.isIntersecting && !seen.has(id)) {
+                    seen.add(id);
+                    w.trackEvent('SECTION_VIEW', { sectionId: id, products: sections[id] || [] });
+                }
+            }
+        }, { threshold: 0.5 });
+
+        targets.forEach(el => observer.observe(el));
+        return () => observer.disconnect();
+    }, []);
+
+    // Load Widgets Scripts
+    useEffect(() => {
+        const scripts = [
+            { id: 'soto-widget-script', src: 'https://reservas.sotodelprior.com/widget.js' },
+            { id: 'soto-hotel-widget-script', src: 'https://reservas.sotodelprior.com/hotel-widget.js' }
+        ];
+
+        scripts.forEach(s => {
+            if (!document.getElementById(s.id)) {
+                const script = document.createElement('script');
+                script.id = s.id;
+                script.src = s.src;
+                script.async = true;
+                document.body.appendChild(script);
+            }
+        });
+        
         // Cleanup if needed
         return () => {
             // Optional: remove script on unmount

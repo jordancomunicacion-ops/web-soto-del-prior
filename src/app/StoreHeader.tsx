@@ -13,7 +13,7 @@ export default function StoreHeader() {
             {/* --- DESKTOP LOGO (Center/Left) --- */}
             <a href="#" className="logo-link hidden md:block">
                 <img
-                    src="/web/assets/logo_horizontal.png"
+                    src="/logo%20soto-OK-evio-carlos-3.png"
                     alt="SOTO del PRIOR Logo"
                     className="site-logo"
                 />
@@ -29,7 +29,7 @@ export default function StoreHeader() {
                     <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden">
                         {/* ICON: COW HEAD (Visible when Closed) */}
                         <img
-                            src="/web/assets/mobile_cow_head.png"
+                            src="/cow-head-logo.png"
                             alt="Menu"
                             className={`absolute inset-0 w-full h-full object-contain transition-all duration-500 ease-in-out transform ${isMenuOpen ? 'opacity-0 rotate-180 scale-50' : 'opacity-100 rotate-0 scale-125'}`}
                         />

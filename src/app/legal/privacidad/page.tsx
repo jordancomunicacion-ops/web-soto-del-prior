@@ -61,8 +61,8 @@ export default function PrivacyPolicy() {
                         <ul className="list-none space-y-3 pl-0">
                             <li className="flex gap-3"><span className="text-[#B38B4D] font-bold">›</span> <strong>Identificativos:</strong> Nombre, apellidos, DNI/NIE (en caso de facturación).</li>
                             <li className="flex gap-3"><span className="text-[#B38B4D] font-bold">›</span> <strong>Contacto:</strong> Correo electrónico, teléfono, dirección de envío.</li>
-                            <li className="flex gap-3"><span className="text-[#B38B4D] font-bold">›</span> <strong>Interacciones en Plataformas (Meta):</strong> Contenido de mensajes directos, comentarios y perfiles públicos de Facebook e Instagram cuando se comunica con nosotros a través de nuestras apps y perfiles oficiales.</li>
-                            <li className="flex gap-3"><span className="text-[#B38B4D] font-bold">›</span> <strong>Navegación:</strong> IP, cookies técnicas y analíticas (vía Google Analytics).</li>
+                            <li className="flex gap-3"><span className="text-[#B38B4D] font-bold">›</span> <strong>Interacciones en Plataformas (Meta y TikTok):</strong> Contenido de mensajes directos, comentarios y perfiles públicos de Facebook, Instagram y TikTok cuando se comunica con nosotros a través de nuestras apps y perfiles oficiales.</li>
+                            <li className="flex gap-3"><span className="text-[#B38B4D] font-bold">›</span> <strong>Navegación y Google:</strong> IP, cookies técnicas y analíticas, y datos de rendimiento publicitario (vía Google Analytics y Google Ads).</li>
                         </ul>
                     </section>
 
@@ -87,32 +87,32 @@ export default function PrivacyPolicy() {
                     <section className="bg-[#FAF9F6] p-6 rounded-sm border border-[#E9E4DB]">
                         <h2 className="text-lg font-bold uppercase mb-4 text-black flex items-center gap-3">
                             <span className="w-8 h-[2px] bg-[#B38B4D]"></span>
-                            4. Integración con Meta Platforms
+                            4. Integración con Meta y TikTok Platforms
                         </h2>
                         <p className="mb-4">
-                            Nuestras aplicaciones utilizan las APIs oficiales de <strong>Meta Platforms, Inc.</strong> (Facebook e Instagram) para centralizar la comunicación con nuestros clientes:
+                            Nuestras aplicaciones utilizan las APIs oficiales de <strong>Meta Platforms, Inc.</strong> (Facebook e Instagram) y <strong>TikTok Technology Limited</strong> para centralizar la comunicación con nuestros clientes:
                         </p>
                         <ul className="list-disc pl-5 space-y-2 text-sm italic">
-                            <li>Solo accedemos a los mensajes directos y comentarios que usted inicia voluntariamente con nuestros perfiles oficiales.</li>
-                            <li>Los datos se procesan en nuestro servidor seguro (CRM) con el único fin de responder a sus solicitudes.</li>
-                            <li>No utilizamos los datos de Meta para perfiles publicitarios externos ni los compartimos con terceros ajenos a la operación de servicio al cliente.</li>
+                            <li>Solo accedemos a los mensajes directos y comentarios que usted inicia voluntariamente con nuestros perfiles oficiales en estas redes.</li>
+                            <li>Los datos se procesan en nuestro servidor seguro (CRM) con el único fin de responder a sus solicitudes y gestionar la atención al cliente.</li>
+                            <li>No utilizamos los datos obtenidos de estas plataformas para perfiles publicitarios externos ni los compartimos con terceros ajenos a la operación de servicio al cliente de JORDAZOLA SL.</li>
                         </ul>
                     </section>
 
                     <section id="data-deletion">
                         <h2 className="text-lg font-bold uppercase mb-4 text-black flex items-center gap-3">
                             <span className="w-8 h-[2px] bg-[#B38B4D]"></span>
-                            5. Eliminación de Datos (Meta Compliance)
+                            5. Eliminación de Datos (Meta y TikTok Compliance)
                         </h2>
                         <p className="mb-4">
-                            Usted tiene el control total sobre sus datos. Si desea que eliminemos la información sincronizada de sus perfiles de Facebook o Instagram en nuestro sistema, puede solicitarlo de las siguientes formas:
+                            Usted tiene el control total sobre sus datos. Si desea que eliminemos la información sincronizada de sus perfiles de Facebook, Instagram o TikTok en nuestro sistema, puede solicitarlo de las siguientes formas:
                         </p>
                         <div className="bg-white border border-gray-200 p-5 space-y-4 shadow-sm">
                             <p className="text-sm">
-                                <strong>Vía Email:</strong> Envíe un correo a <a href="mailto:info@sotodelprior.com" className="font-bold text-[#B38B4D]">info@sotodelprior.com</a> con el asunto "Solicitud de Eliminación de Datos Meta", indicando su nombre de usuario.
+                                <strong>Vía Email:</strong> Envíe un correo a <a href="mailto:info@sotodelprior.com" className="font-bold text-[#B38B4D]">info@sotodelprior.com</a> con el asunto "Solicitud de Eliminación de Datos (Redes Sociales)", indicando su nombre de usuario y la plataforma.
                             </p>
                             <p className="text-sm">
-                                <strong>Plazo:</strong> Procederemos a la eliminación completa de su historial de mensajes en nuestro CRM en un plazo máximo de 72 horas laborales desde la recepción de la solicitud.
+                                <strong>Plazo:</strong> Procederemos a la eliminación completa de su historial de interacciones en nuestro CRM en un plazo máximo de 72 horas laborales desde la recepción de la solicitud.
                             </p>
                         </div>
                     </section>

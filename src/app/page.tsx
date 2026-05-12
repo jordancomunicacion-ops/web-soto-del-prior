@@ -31,7 +31,7 @@ export default async function Home() {
     "@type": "Organization",
     "name": "SOTO del PRIOR",
     "url": "https://www.sotodelprior.com",
-    "logo": "https://www.sotodelprior.com/web/assets/logo_full.png",
+    "logo": "https://www.sotodelprior.com/logo%20soto-OK-evio-carlos-3.png",
     "sameAs": [
       "https://www.instagram.com/sotodelprior/",
       "https://www.tiktok.com/@sotodelprior"
@@ -81,7 +81,7 @@ export default async function Home() {
             {/* Booking Trigger Link */}
             <div className="booking-widget-container" style={{ marginTop: '2rem' }}>
               <a href="#" className="btn-link soto-widget-trigger" style={{ width: 'fit-content', padding: '1rem 2rem' }}>
-                RESERVAR MESA
+                RESERVAR
               </a>
             </div>
           </div>
@@ -116,10 +116,9 @@ export default async function Home() {
               Desconectar para reconectar. Madera, piedra y vistas a la sierra.
               Una estancia de lujo rural donde el único ruido es el viento.
             </p>
-            {/* Avirato Booking Engine */}
+            {/* Hotel Booking Widget Placeholder (Inline) */}
             <div className="booking-widget-container">
-              <iframe src="http://localhost:3001/widget" frameBorder="0" height="600"
-                width="100%" title="Reserva tu estancia"></iframe>
+              <div id="soto-hotel-booking-widget" data-hotel="55f8cc33-9e75-49b4-9501-c55e528a82ce" data-mode="inline"></div>
             </div>
           </div>
         </section>
@@ -197,10 +196,16 @@ export default async function Home() {
               className="social-icon" /></a>
             <a href="#"><img src="/web/assets/icon_phone.svg" alt="Teléfono" className="social-icon" /></a>
           </div>
-          <p style={{ marginTop: '2rem', opacity: 0.7 }}>© 2024 TODOS LOS DERECHOS RESERVADOS</p>
+          <p style={{ marginTop: '3rem', opacity: 0.9, fontSize: '1.2rem', maxWidth: '800px', textAlign: 'center', lineHeight: '1.4' }}>
+            Si necesitas asesoramiento o servicios de análisis y automatización en entorno rural o pequeño comercio y/o gastronómico, contactanos en <a href="https://www.oteyzerena.com" target="_blank" style={{ color: 'inherit', textDecoration: 'underline', fontWeight: 'bold' }}>OTEYZERENA</a>
+          </p>
+          <p style={{ marginTop: '2rem', opacity: 0.5, fontSize: '0.6rem', letterSpacing: '0.1em' }}>© 2026 TODOS LOS DERECHOS RESERVADOS</p>
         </section>
 
       </div>
+
+      {/* Restaurant Booking Widget Placeholder */}
+      <div id="soto-booking-widget" data-restaurant="b5d83aa8-8f8d-4f0e-b7d8-8c563e466e3b" data-mode="popup"></div>
 
       {/* Client Interaction Logic (Scroll, Modals) */}
       <WebInteractions />

@@ -17,6 +17,11 @@ const lato = Lato({
   variable: "--font-body",
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: {
     default: "SOTO del PRIOR | Ganadería & Restaurante",
@@ -57,7 +62,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
@@ -95,25 +99,45 @@ export default function RootLayout({
                   return id;
               }
 
+              var validRoutes = [
+                /^\/$/,
+                /^\/checkout(\/.*)?$/,
+                /^\/login$/,
+                /^\/reservas(\/.*)?$/,
+                /^\/legal\/.+$/,
+                /^\/cameras$/,
+                /^\/sistemas$/,
+                /^\/tpv$/,
+                /^\/infrastructure$/,
+                /^\/crm(\/.*)?$/
+              ];
+              function isValidRoute(p) {
+                for (var i = 0; i < validRoutes.length; i++) {
+                  if (validRoutes[i].test(p)) return true;
+                }
+                return false;
+              }
+
               function track(url) {
                 if(!url) url = window.location.pathname;
-                
+                if(!isValidRoute(url)) return;
+
                 var vid = getId('ana_visitor_id', localStorage);
                 var sid = getId('ana_session_id', sessionStorage);
 
-                var data = { 
-                    websiteId: siteId, 
-                    url: url, 
-                    referrer: document.referrer, 
+                var data = {
+                    websiteId: siteId,
+                    url: url,
+                    referrer: document.referrer,
                     userAgent: navigator.userAgent,
                     visitorId: vid,
                     sessionId: sid
                 };
-                fetch(endpoint, { 
-                    method: "POST", 
+                fetch(endpoint, {
+                    method: "POST",
                     mode: "cors",
-                    headers: { "Content-Type": "application/json" }, 
-                    body: JSON.stringify(data) 
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
                 }).catch(function(e) { console.warn("Analytics Error:", e); });
               }
               track();

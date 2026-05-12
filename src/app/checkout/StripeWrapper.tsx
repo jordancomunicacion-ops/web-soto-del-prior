@@ -1,43 +1,60 @@
 'use client';
 
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import { useEffect, useState } from 'react';
+import { loadStripe, type Stripe as StripeJs } from '@stripe/stripe-js';
+import { useMemo } from 'react';
 import CheckoutForm from './CheckoutForm';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+// loadStripe debe llamarse fuera del componente para no recrear el objeto.
+const stripePromise: Promise<StripeJs | null> = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
+);
 
-export default function StripeWrapper({ total, items }: { total: number, items: any[] }) {
-    const [clientSecret, setClientSecret] = useState("");
+export default function StripeWrapper({
+    total,
+    items,
+}: {
+    total: number;
+    items: any[];
+}) {
+    /**
+     * Modo deferred PaymentIntent: declaramos el "look & feel" y el modo (payment),
+     * el clientSecret se inyecta luego dinámicamente cuando se confirme el pago
+     * vía elements.submit() + stripe.confirmPayment({ elements, clientSecret }).
+     *
+     * Esto permite recoger los datos del cliente ANTES de crear el PaymentIntent
+     * (necesario para guardar el ShopOrder con dirección y email correctos).
+     *
+     * Doc: https://docs.stripe.com/payments/accept-a-payment-deferred
+     */
+    const options = useMemo(
+        () => ({
+            mode: 'payment' as const,
+            amount: Math.round(total * 100), // céntimos
+            currency: 'eur',
+            appearance: {
+                theme: 'stripe' as const,
+                variables: { colorPrimary: '#C59D5F' },
+            },
+        }),
+        [total]
+    );
 
-    useEffect(() => {
-        // Create PaymentIntent as soon as the page loads
-        if (total > 0) {
-            fetch("/api/checkout", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ items, amount: total }),
-            })
-                .then((res) => res.json())
-                .then((data) => setClientSecret(data.clientSecret));
-        }
-    }, [items, total]);
+    if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+        return (
+            <div className="p-4 border border-red-200 bg-red-50 text-red-700 text-sm">
+                Falta configurar <code>NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code> en{' '}
+                <code>.env</code>.
+            </div>
+        );
+    }
 
-    const appearance = {
-        theme: 'stripe' as const,
-        variables: {
-            colorPrimary: '#C59D5F',
-        },
-    };
-    const options = {
-        clientSecret,
-        appearance,
-    };
-
-    if (!clientSecret) {
-        return <div className="p-4 text-center">Cargando pasarela de pago segura...</div>;
+    if (total <= 0) {
+        return (
+            <div className="p-4 text-center text-gray-500">
+                El total del carrito debe ser mayor que 0.
+            </div>
+        );
     }
 
     return (

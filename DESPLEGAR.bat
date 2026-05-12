@@ -14,6 +14,7 @@ tar --exclude="node_modules" --exclude=".git" --exclude=".next" --exclude="db_da
 
 echo [+] 2. SUBIENDO AL SERVIDOR (%SERVER%)...
 ssh %SERVER% "mkdir -p %REMOTE_DIR%"
+scp setup_remote.sh %SERVER%:%REMOTE_DIR%/
 scp %ARCHIVE% %SERVER%:%REMOTE_DIR%/
 
 echo [+] 3. EJECUTANDO DESPLIEGUE REMOTO...

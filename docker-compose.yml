@@ -1,7 +1,7 @@
 name: "sotoweb"
 
 networks:
-  proxy-net:
+  proxy:
     external: true
 
 services:
@@ -9,6 +9,7 @@ services:
     build: .
     container_name: sotoweb-main
     restart: unless-stopped
+    init: true
     environment:
       - DATABASE_URL=file:/app/db/prod.db
       - NEXT_PUBLIC_APP_URL=https://www.sotodelprior.com
@@ -19,7 +20,7 @@ services:
     volumes:
       - ./db_data:/app/db
     networks:
-      - proxy-net
+      - proxy
     expose:
       - "3000"
     labels:

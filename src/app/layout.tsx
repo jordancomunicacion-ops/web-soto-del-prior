@@ -99,13 +99,8 @@ export default function RootLayout({
                   return id;
               }
 
-              // El filtrado de rutas inválidas lo hace el endpoint en el CRM
-              // (INVALID_PATH_PREFIXES en /api/analytics/track). Aquí no
-              // hacemos whitelist client-side porque expresarlo con regex
-              // literales dentro de este <Script>{`...`}</Script> rompía el
-              // build (los backslashes se perdían y "/^\/$/" salía como
-              // "/^/$/", regex con flags inválidos → SyntaxError → snippet
-              // entero crasheaba en runtime y no se trackeaba nada).
+              // Sin whitelist client-side: el endpoint del CRM ya filtra
+              // paths invalidos en INVALID_PATH_PREFIXES.
 
               function track(url) {
                 if(!url) url = window.location.pathname;

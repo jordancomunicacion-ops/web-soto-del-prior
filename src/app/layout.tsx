@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     default: "SOTO del PRIOR | Ganadería & Restaurante",
     template: "%s | SOTO del PRIOR"
   },
-  description: "Antes que cocineros, somos ganaderos. Carne de buey y vaca de pasto, restaurante km0 y alojamiento rural en un entorno único.",
-  keywords: ["ganadería", "restaurante", "carne de buey", "alojamiento rural", "soto del prior", "eventos", "km0"],
+  description: "Antes que cocineros, somos ganaderos. Carne de buey y vaca de pasto, restaurante km0 y alojamiento rural en un entorno único. Conecta con nosotros a través de nuestra aplicación RR.SS. SOTO del PRIOR.",
+  keywords: ["ganadería", "restaurante", "carne de buey", "alojamiento rural", "soto del prior", "eventos", "km0", "RR.SS. SOTO del PRIOR", "app"],
   authors: [{ name: "SOTO del PRIOR" }],
   creator: "SOTO del PRIOR",
   metadataBase: new URL("https://www.sotodelprior.com"),
@@ -99,28 +99,16 @@ export default function RootLayout({
                   return id;
               }
 
-              var validRoutes = [
-                /^\/$/,
-                /^\/checkout(\/.*)?$/,
-                /^\/login$/,
-                /^\/reservas(\/.*)?$/,
-                /^\/legal\/.+$/,
-                /^\/cameras$/,
-                /^\/sistemas$/,
-                /^\/tpv$/,
-                /^\/infrastructure$/,
-                /^\/crm(\/.*)?$/
-              ];
-              function isValidRoute(p) {
-                for (var i = 0; i < validRoutes.length; i++) {
-                  if (validRoutes[i].test(p)) return true;
-                }
-                return false;
-              }
+              // El filtrado de rutas inválidas lo hace el endpoint en el CRM
+              // (INVALID_PATH_PREFIXES en /api/analytics/track). Aquí no
+              // hacemos whitelist client-side porque expresarlo con regex
+              // literales dentro de este <Script>{`...`}</Script> rompía el
+              // build (los backslashes se perdían y "/^\/$/" salía como
+              // "/^/$/", regex con flags inválidos → SyntaxError → snippet
+              // entero crasheaba en runtime y no se trackeaba nada).
 
               function track(url) {
                 if(!url) url = window.location.pathname;
-                if(!isValidRoute(url)) return;
 
                 var vid = getId('ana_visitor_id', localStorage);
                 var sid = getId('ana_session_id', sessionStorage);

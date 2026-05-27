@@ -18,7 +18,9 @@ echo ============================================================
 echo.
 
 echo [1/4] Empaquetando %APP_NAME% (Next.js)...
-tar --exclude="node_modules" --exclude=".next" --exclude=".git" --exclude=".idea" --exclude=".vscode" --exclude=".claude" --exclude="dist" --exclude="build" --exclude="db_data" --exclude=".env.local" --exclude="*.log" --exclude="%ARCHIVE%" -czf %ARCHIVE% .
+REM --warning=no-file-changed: ignora "file changed as we read it" (típico
+REM en Windows cuando el SO o un IDE toca timestamps mientras tar lee).
+tar --warning=no-file-changed --exclude="node_modules" --exclude=".next" --exclude=".git" --exclude=".idea" --exclude=".vscode" --exclude=".claude" --exclude="dist" --exclude="build" --exclude="db_data" --exclude=".env.local" --exclude="*.log" --exclude="%ARCHIVE%" -czf %ARCHIVE% .
 if errorlevel 1 goto :error
 
 echo.

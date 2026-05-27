@@ -4,7 +4,7 @@ import '../../web_main.css';
 
 export const metadata: Metadata = {
     title: 'Términos de Uso | SOTO DEL PRIOR',
-    description: 'Términos de uso y condiciones legales de SOTO DEL PRIOR (JORDAZOLA SL).',
+    description: 'Términos de uso y condiciones legales de SOTO DEL PRIOR y la aplicación RR.SS. SOTO del PRIOR (JORDAZOLA SL).',
 };
 
 export default function TermsOfUse() {
@@ -21,7 +21,7 @@ export default function TermsOfUse() {
             <div className="max-w-4xl mx-auto p-6 md:p-12 lg:p-16 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)] my-8 md:my-16 rounded-sm border border-gray-100">
                 <header className="mb-12 border-b border-gray-100 pb-8">
                     <h1 className="text-4xl md:text-5xl font-[family-name:var(--font-heading)] uppercase mb-4 text-[#B38B4D] tracking-tight">
-                        Términos de Uso
+                        Términos de Uso y App RR.SS. SOTO del PRIOR
                     </h1>
                     <div className="flex items-center gap-4 text-[11px] uppercase tracking-widest text-gray-400">
                         <span>Entidad: JORDAZOLA SL</span>
@@ -38,7 +38,7 @@ export default function TermsOfUse() {
                             1. Información General
                         </h2>
                         <p>
-                            El presente documento establece las condiciones por las que se rige el uso de esta página web y de nuestras aplicaciones (en adelante, los "Términos de Uso"). Le rogamos que lea atentamente estos Términos, nuestra Política de Privacidad y nuestra Política de Cookies antes de usar nuestra web o nuestros servicios.
+                            El presente documento establece las condiciones por las que se rige el uso de esta página web y de nuestra aplicación <strong>RR.SS. SOTO del PRIOR</strong> (en adelante, los "Términos de Uso"). Le rogamos que lea atentamente estos Términos, nuestra Política de Privacidad y nuestra Política de Cookies antes de usar nuestra web o nuestros servicios.
                         </p>
                         <div className="mt-4 p-5 bg-[#F9F7F4] border-l-4 border-[#B38B4D] text-sm">
                             <ul className="space-y-2">

@@ -4,7 +4,7 @@ import '../../web_main.css';
 
 export const metadata: Metadata = {
     title: 'Política de Privacidad | SOTO DEL PRIOR',
-    description: 'Política de privacidad y protección de datos de SOTO DEL PRIOR (JORDAZOLA SL).',
+    description: 'Política de privacidad y protección de datos de SOTO DEL PRIOR y la aplicación RR.SS. SOTO del PRIOR (JORDAZOLA SL).',
 };
 
 export default function PrivacyPolicy() {
@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
             <div className="max-w-4xl mx-auto p-6 md:p-12 lg:p-16 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)] my-8 md:my-16 rounded-sm border border-gray-100">
                 <header className="mb-12 border-b border-gray-100 pb-8">
                     <h1 className="text-4xl md:text-5xl font-[family-name:var(--font-heading)] uppercase mb-4 text-[#B38B4D] tracking-tight">
-                        Política de Privacidad
+                        Política de Privacidad y App RR.SS. SOTO del PRIOR
                     </h1>
                     <div className="flex items-center gap-4 text-[11px] uppercase tracking-widest text-gray-400">
                         <span>Entidad: JORDAZOLA SL</span>
@@ -90,7 +90,7 @@ export default function PrivacyPolicy() {
                             4. Integración con Meta y TikTok Platforms
                         </h2>
                         <p className="mb-4">
-                            Nuestras aplicaciones utilizan las APIs oficiales de <strong>Meta Platforms, Inc.</strong> (Facebook e Instagram) y <strong>TikTok Technology Limited</strong> para centralizar la comunicación con nuestros clientes:
+                            Nuestra aplicación <strong>RR.SS. SOTO del PRIOR</strong> utiliza las APIs oficiales de <strong>Meta Platforms, Inc.</strong> (Facebook e Instagram) y <strong>TikTok Technology Limited</strong> para centralizar la comunicación con nuestros clientes:
                         </p>
                         <ul className="list-disc pl-5 space-y-2 text-sm italic">
                             <li>Solo accedemos a los mensajes directos y comentarios que usted inicia voluntariamente con nuestros perfiles oficiales en estas redes.</li>

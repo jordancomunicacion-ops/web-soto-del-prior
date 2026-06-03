@@ -26,3 +26,6 @@ yarn-error.log*
 # Local env files
 .env*.local
 .vercel
+
+# BD SQLite de produccion: NUNCA versionar (incidente 2026-06-03)
+db_data/

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
+import { syncCatalogToCache } from '@/lib/obrador';
 
 /**
  * POST /api/checkout
@@ -44,6 +45,10 @@ export async function POST(request: Request) {
                 { status: 400 }
             );
         }
+
+        // 0. Refrescar la caché desde el obrador para validar con precios al día
+        //    (mejor esfuerzo: si el obrador no responde, validamos con la caché).
+        await syncCatalogToCache();
 
         // 1. Cargar productos reales de BD para validar precios
         const productIds = items.map((i) => i.id);

@@ -9,11 +9,12 @@ export type CartItem = {
     price: number;
     quantity: number;
     image?: string;
+    category?: string; // categoría del obrador (p.ej. LICOR) — para reglas como el 18+
 };
 
 type CartContextType = {
     items: CartItem[];
-    addToCart: (product: { id: string; name: string; price: number; image?: string }) => void;
+    addToCart: (product: { id: string; name: string; price: number; image?: string; category?: string }) => void;
     removeFromCart: (id: string) => void;
     updateQuantity: (id: string, delta: number) => void;
     clearCart: () => void;
@@ -49,7 +50,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
     }, [items, isLoaded]);
 
-    const addToCart = (product: { id: string; name: string; price: number; image?: string }) => {
+    const addToCart = (product: { id: string; name: string; price: number; image?: string; category?: string }) => {
         setItems(prev => {
             const existing = prev.find(i => i.id === product.id);
             if (existing) {

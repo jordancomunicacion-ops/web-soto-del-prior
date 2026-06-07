@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
     try {
         const body = await request.json();
-        const { items, customerDetails } = body as {
+        const { items, customerDetails, ageConfirmed } = body as {
             items: Array<{ id: string; quantity: number }>;
             customerDetails: {
                 name: string;
@@ -33,6 +33,7 @@ export async function POST(request: Request) {
                 city: string;
                 zip: string;
             };
+            ageConfirmed?: boolean;
         };
 
         // Validación básica
@@ -59,6 +60,16 @@ export async function POST(request: Request) {
         if (products.length !== items.length) {
             return NextResponse.json(
                 { error: 'Alguno de los productos ya no está disponible' },
+                { status: 400 }
+            );
+        }
+
+        // Venta de alcohol: si hay algún licor, exigir confirmación de mayoría de
+        // edad también en servidor (la casilla del cliente se puede saltar por API).
+        const hasAlcohol = products.some((p) => p.category === 'LICOR');
+        if (hasAlcohol && ageConfirmed !== true) {
+            return NextResponse.json(
+                { error: 'Debes confirmar que eres mayor de 18 años para comprar bebidas alcohólicas.' },
                 { status: 400 }
             );
         }

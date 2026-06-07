@@ -75,7 +75,7 @@ export default async function TiendaPage() {
                     <h3>{p.name}</h3>
                     {p.description && <p className="product-detail">{p.description}</p>}
                     <p className="product-price">{p.price.toFixed(2)}€</p>
-                    <BuyButton product={{ id: p.id, name: p.name, price: p.price, image: p.image }} />
+                    <BuyButton product={{ id: p.id, name: p.name, price: p.price, image: p.image, category: p.category }} />
                   </div>
                 ))}
               </div>

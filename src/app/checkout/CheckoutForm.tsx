@@ -20,6 +20,10 @@ export default function CheckoutForm({
     const [message, setMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    // Venta de alcohol: si el carrito lleva algún licor, exigimos confirmar 18+.
+    const hasAlcohol = items.some((i) => i.category === 'LICOR');
+    const [ageConfirmed, setAgeConfirmed] = useState(false);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -39,6 +43,11 @@ export default function CheckoutForm({
 
         if (!stripe || !elements) return;
 
+        if (hasAlcohol && !ageConfirmed) {
+            setMessage('Debes confirmar que eres mayor de 18 años para comprar bebidas alcohólicas.');
+            return;
+        }
+
         setIsLoading(true);
 
         try {
@@ -57,6 +66,7 @@ export default function CheckoutForm({
                 body: JSON.stringify({
                     items: items.map((i) => ({ id: i.id, quantity: i.quantity })),
                     customerDetails: formData,
+                    ageConfirmed,
                 }),
             });
 
@@ -223,6 +233,25 @@ export default function CheckoutForm({
                 </div>
             </div>
 
+            {hasAlcohol && (
+                <div className="bg-amber-50 border border-amber-200 p-4 rounded">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            checked={ageConfirmed}
+                            onChange={(e) => setAgeConfirmed(e.target.checked)}
+                            className="mt-1 h-5 w-5 accent-[#C59D5F]"
+                        />
+                        <span className="text-sm text-amber-900">
+                            <strong>Confirmo que soy mayor de 18 años.</strong> Tu pedido contiene
+                            bebidas alcohólicas. Está prohibida su venta a menores de edad
+                            (Ley 7/2021). Podremos solicitar un documento que acredite la edad en
+                            el momento de la entrega.
+                        </span>
+                    </label>
+                </div>
+            )}
+
             {message && (
                 <div className="text-red-600 text-sm font-bold bg-red-50 border border-red-200 p-3 rounded">
                     {message}
@@ -231,7 +260,7 @@ export default function CheckoutForm({
 
             <button
                 type="submit"
-                disabled={isLoading || !stripe || !elements}
+                disabled={isLoading || !stripe || !elements || (hasAlcohol && !ageConfirmed)}
                 className="w-full bg-[#C59D5F] text-white py-4 font-bold uppercase text-lg hover:bg-black transition-colors disabled:opacity-70 disabled:cursor-not-allowed mt-8 shadow-lg"
                 style={{ fontFamily: 'var(--font-heading)' }}
             >

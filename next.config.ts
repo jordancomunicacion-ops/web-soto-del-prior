@@ -14,8 +14,6 @@ const nextConfig: NextConfig = {
             { source: "/checkout-old", destination: "/checkout", permanent: true },
             { source: "/pedido-online", destination: "/checkout", permanent: true },
             { source: "/producto/:slug*", destination: "/#obrador", permanent: true },
-            { source: "/tienda", destination: "/#obrador", permanent: true },
-            { source: "/tienda/:path*", destination: "/#obrador", permanent: true },
             { source: "/hamburgueseria", destination: "/", permanent: true },
             { source: "/mi-cuenta", destination: "/login", permanent: true },
             { source: "/mi-cuenta/:path*", destination: "/login", permanent: true },

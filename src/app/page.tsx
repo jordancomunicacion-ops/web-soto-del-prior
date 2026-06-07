@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+import { syncCatalogToCache } from '@/lib/obrador';
 import WebInteractions from './WebInteractions';
 import BuyButton from './BuyButton';
 import StoreHeader from './StoreHeader';
@@ -6,6 +8,9 @@ import CartSidebar from './CartSidebar'; // UPDATED to Final Version
 
 async function getProducts() {
   try {
+    // Refresca la caché local desde el obrador (fuente de verdad). Si el
+    // obrador no responde, seguimos con lo que haya en la caché.
+    await syncCatalogToCache();
     const products = await prisma.shopProduct.findMany();
     // Serialize Decimal to number/string for Client Components
     return products.map(p => ({
@@ -158,6 +163,11 @@ export default async function Home() {
                   image: '/web/assets/pack_artesanal.png'
                 }} />
               </div>
+            </div>
+            <div style={{ marginTop: '1.5rem' }}>
+              <Link href="/tienda" className="btn-link" style={{ width: 'fit-content', padding: '0.8rem 1.6rem' }}>
+                VER TIENDA COMPLETA
+              </Link>
             </div>
           </div>
         </section>

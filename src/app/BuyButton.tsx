@@ -11,7 +11,8 @@ export default function BuyButton({ product }: { product: any }) {
             id: product.id,
             name: product.name,
             price,
-            image: product.image
+            image: product.image,
+            category: product.category
         });
 
         const w = window as unknown as { trackEvent?: (t: string, d: Record<string, unknown>) => void };

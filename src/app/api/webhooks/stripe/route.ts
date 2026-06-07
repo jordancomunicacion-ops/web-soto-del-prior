@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
 import { sendOrderConfirmation } from '@/lib/mail';
+import { forwardOrderToObrador } from '@/lib/obrador';
 import type Stripe from 'stripe';
 
 // Necesario en Next.js App Router para acceder al body crudo y verificar la firma.
@@ -94,6 +95,25 @@ export async function POST(request: Request) {
                 } catch (mailErr) {
                     console.error('[stripe-webhook] Email error (no bloquea):', mailErr);
                 }
+
+                // Reenviar el pedido al obrador (fuente de verdad). Idempotente
+                // allí por paymentRef; un fallo no bloquea (el pago ya se cobró).
+                await forwardOrderToObrador({
+                    paymentRef: pi.id,
+                    total: parseFloat(order.total.toString()),
+                    customerName: order.customerName ?? '',
+                    customerEmail: order.customerEmail,
+                    phone: order.phone,
+                    address: order.address,
+                    city: order.city,
+                    zipCode: order.zipCode,
+                    items: order.items.map((it) => ({
+                        masterProductId: it.productId,
+                        productName: it.product.name,
+                        quantity: it.quantity,
+                        priceAtPurchase: parseFloat(it.priceAtPurchase.toString()),
+                    })),
+                });
 
                 console.log(`[stripe-webhook] Orden ${orderId} marcada PAID`);
                 break;

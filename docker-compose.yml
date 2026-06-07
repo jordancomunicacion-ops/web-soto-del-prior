@@ -17,13 +17,24 @@ services:
       - AUTH_TRUST_HOST=true
       - NEXTAUTH_URL=https://sotodelprior.com
       - NEXTAUTH_SECRET=changeme123unused
+      # Obrador (fuente de verdad del catálogo y pedidos). Clave de integración
+      # del local; se puede rotar desde Obrador → Ajustes → Integración.
+      - OBRADOR_API_URL=https://obrador.sotodelprior.com
+      - OBRADOR_API_KEY=mUdP1cDdLfEQkb7b9tykP2XZllpqKKWl
     volumes:
       - ./db_data:/app/db
     networks:
       - proxy
     expose:
       - "3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.status<500?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
     labels:
+      - "autoheal=true"
       - "traefik.enable=true"
       # Router HTTPS
       - "traefik.http.routers.sotoweb-main.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"

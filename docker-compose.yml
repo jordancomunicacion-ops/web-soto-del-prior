@@ -15,7 +15,7 @@ services:
       - NEXT_PUBLIC_APP_URL=https://www.sotodelprior.com
       - NODE_ENV=production
       - AUTH_TRUST_HOST=true
-      - NEXTAUTH_URL=https://sotodelprior.com
+      - NEXTAUTH_URL=https://www.sotodelprior.com
       - NEXTAUTH_SECRET=changeme123unused
       # Obrador (fuente de verdad del catálogo y pedidos). Clave de integración
       # del local; se puede rotar desde Obrador → Ajustes → Integración.
@@ -39,6 +39,11 @@ services:
       # Router HTTPS
       - "traefik.http.routers.sotoweb-main.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
       - "traefik.http.routers.sotoweb-main.entrypoints=websecure"
+      # Redirect 301 no-www -> www (la canonica y el sitemap usan www)
+      - "traefik.http.middlewares.sotoweb-wwwredir.redirectregex.regex=^https?://sotodelprior\\.com/(.*)"
+      - "traefik.http.middlewares.sotoweb-wwwredir.redirectregex.replacement=https://www.sotodelprior.com/$${1}"
+      - "traefik.http.middlewares.sotoweb-wwwredir.redirectregex.permanent=true"
+      - "traefik.http.routers.sotoweb-main.middlewares=sotoweb-wwwredir"
       - "traefik.http.routers.sotoweb-main.tls=true"
       - "traefik.http.routers.sotoweb-main.tls.certresolver=le"
       # Servicio

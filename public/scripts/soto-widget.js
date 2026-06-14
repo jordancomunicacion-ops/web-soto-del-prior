@@ -2,7 +2,7 @@
     const SCRIPT_ID = 'soto-widget-script';
     const CONTAINER_ID = 'soto-widget-container';
     // Updated to production URL
-    const IFRAME_URL = 'https://reservas.sotodelprior.com/widget/restaurant';
+    const IFRAME_URL = 'https://reservas.oteyzerena.com/widget/restaurant';
 
     function init() {
         // Prevent multiple initializations

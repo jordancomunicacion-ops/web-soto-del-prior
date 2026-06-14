@@ -163,8 +163,8 @@ function WebInteractionsContent() {
     // Load Widgets Scripts
     useEffect(() => {
         const scripts = [
-            { id: 'soto-widget-script', src: 'https://reservas.sotodelprior.com/widget.js' },
-            { id: 'soto-hotel-widget-script', src: 'https://reservas.sotodelprior.com/hotel-widget.js' }
+            { id: 'soto-widget-script', src: 'https://reservas.oteyzerena.com/widget.js' },
+            { id: 'soto-hotel-widget-script', src: 'https://reservas.oteyzerena.com/hotel-widget.js' }
         ];
 
         scripts.forEach(s => {

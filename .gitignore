@@ -29,3 +29,9 @@ yarn-error.log*
 
 # BD SQLite de produccion: NUNCA versionar (incidente 2026-06-03)
 db_data/
+
+# Nunca versionar el entorno: este .env estuvo publicado en un repo publico
+# con AUTH_SECRET y claves de Stripe (27/07/2026).
+.env
+.env.*
+!.env.example

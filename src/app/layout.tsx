@@ -24,11 +24,11 @@ export const viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "SOTO del PRIOR | Ganadería & Restaurante",
+    default: "SOTO del PRIOR | Ganadería, Asador y Hamburguesería en Pamplona (Navarra)",
     template: "%s | SOTO del PRIOR"
   },
-  description: "Antes que cocineros, somos ganaderos. Carne de buey y vaca de pasto, restaurante km0 y alojamiento rural en un entorno único. Conecta con nosotros a través de nuestra aplicación RR.SS. SOTO del PRIOR.",
-  keywords: ["ganadería", "restaurante", "carne de buey", "alojamiento rural", "soto del prior", "eventos", "km0", "RR.SS. SOTO del PRIOR", "app"],
+  description: "SOTO del PRIOR: ganadería propia, asador y hamburguesería km0 en Pamplona (Navarra). Carne de buey y vaca de pasto, visitas a la granja y producto artesano y tradicional navarro. Antes que cocineros, somos ganaderos.",
+  keywords: ["ganadería", "ganadería en Navarra", "ganadería en Pamplona", "asador en Pamplona", "hamburguesería en Pamplona", "restaurante en Pamplona", "visitas a la granja", "visitas granja Navarra", "producto artesano Navarra", "producto tradicional navarro", "carne de buey", "vaca de pasto", "km0", "alojamiento rural", "soto del prior"],
   authors: [{ name: "SOTO del PRIOR" }],
   creator: "SOTO del PRIOR",
   metadataBase: new URL("https://www.sotodelprior.com"),
@@ -77,6 +77,39 @@ export default function RootLayout({
       <body
         className={`${oswald.variable} ${lato.variable}`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": ["Restaurant", "LocalBusiness"],
+              "@id": "https://www.sotodelprior.com/#business",
+              name: "SOTO del PRIOR",
+              description:
+                "Ganadería propia, asador y hamburguesería km0 en Pamplona (Navarra). Carne de buey y vaca de pasto, visitas a la granja y producto artesano y tradicional navarro.",
+              url: "https://www.sotodelprior.com",
+              image: "https://www.sotodelprior.com/web/assets/hero_landscape_clean.png",
+              servesCuisine: ["Asador", "Hamburguesería", "Carne a la brasa", "Cocina km0"],
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Pamplona",
+                addressRegion: "Navarra",
+                addressCountry: "ES",
+              },
+              areaServed: [
+                { "@type": "City", name: "Pamplona" },
+                { "@type": "AdministrativeArea", name: "Navarra" },
+              ],
+              knowsAbout: [
+                "ganadería",
+                "visitas a la granja",
+                "producto artesano navarro",
+                "producto tradicional navarro",
+              ],
+              priceRange: "€€",
+            }),
+          }}
+        />
         <CartProvider>
           {children}
         </CartProvider>
@@ -85,7 +118,7 @@ export default function RootLayout({
           {`
             (function() {
               var siteId = "6de8b4c4-21db-4d2b-9fa6-58c3af39f77c";
-              var endpoint = "https://crm.sotodelprior.com/api/analytics/track"; 
+              var endpoint = "https://crm.oteyzerena.com/api/analytics/track"; 
 
               // Helper to get/create ID (Site-specific storage keys)
               function getId(key, storage) {

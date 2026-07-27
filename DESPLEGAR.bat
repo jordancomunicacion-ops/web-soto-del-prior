@@ -7,9 +7,13 @@ cd /d "%~dp0"
 set APP_NAME=WEB
 set REMOTE_USER=root
 set REMOTE_HOST=sotodelprior.com
-set REMOTE_PATH=~/SOTOdelPRIOR/apps/web
+REM Las webs viven en /root/SOTOdelPRIOR/webs/; en apps/ solo estan las que
+REM llevan backend. El script apuntaba a apps/web, que ya no existe: el deploy
+REM fallaba en el primer git pull.
+set REMOTE_PATH=/root/SOTOdelPRIOR/webs/sotodelprior
 set COMPOSE=docker compose -f docker-compose.yml
-set WEB=sotoweb-main
+REM El contenedor se llama web-sotodelprior desde el renombrado; antes sotoweb-main.
+set WEB=web-sotodelprior
 set DOMAIN=sotodelprior.com
 set BACKUP_DIR=/backups/web
 

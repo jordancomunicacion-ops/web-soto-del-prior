@@ -1,13 +1,13 @@
-name: "sotoweb"
+name: "web-sotodelprior"
 
 networks:
-  proxy:
+  proxy-net:
     external: true
 
 services:
-  sotoweb-main:
+  web-sotodelprior:
     build: .
-    container_name: sotoweb-main
+    container_name: web-sotodelprior
     restart: unless-stopped
     init: true
     environment:
@@ -19,12 +19,12 @@ services:
       - NEXTAUTH_SECRET=changeme123unused
       # Obrador (fuente de verdad del catálogo y pedidos). Clave de integración
       # del local; se puede rotar desde Obrador → Ajustes → Integración.
-      - OBRADOR_API_URL=https://obrador.sotodelprior.com
+      - OBRADOR_API_URL=https://obrador.oteyzerena.com
       - OBRADOR_API_KEY=mUdP1cDdLfEQkb7b9tykP2XZllpqKKWl
     volumes:
       - ./db_data:/app/db
     networks:
-      - proxy
+      - proxy-net
     expose:
       - "3000"
     healthcheck:
@@ -37,19 +37,19 @@ services:
       - "autoheal=true"
       - "traefik.enable=true"
       # Router HTTPS
-      - "traefik.http.routers.sotoweb-main.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
-      - "traefik.http.routers.sotoweb-main.entrypoints=websecure"
+      - "traefik.http.routers.web-sotodelprior.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
+      - "traefik.http.routers.web-sotodelprior.entrypoints=websecure"
       # Redirect 301 no-www -> www (la canonica y el sitemap usan www)
-      - "traefik.http.middlewares.sotoweb-wwwredir.redirectregex.regex=^https?://sotodelprior\\.com/(.*)"
-      - "traefik.http.middlewares.sotoweb-wwwredir.redirectregex.replacement=https://www.sotodelprior.com/$${1}"
-      - "traefik.http.middlewares.sotoweb-wwwredir.redirectregex.permanent=true"
-      - "traefik.http.routers.sotoweb-main.middlewares=sotoweb-wwwredir"
-      - "traefik.http.routers.sotoweb-main.tls=true"
-      - "traefik.http.routers.sotoweb-main.tls.certresolver=le"
+      - "traefik.http.middlewares.web-sotodelprior-wwwredir.redirectregex.regex=^https?://sotodelprior\\.com/(.*)"
+      - "traefik.http.middlewares.web-sotodelprior-wwwredir.redirectregex.replacement=https://www.sotodelprior.com/$${1}"
+      - "traefik.http.middlewares.web-sotodelprior-wwwredir.redirectregex.permanent=true"
+      - "traefik.http.routers.web-sotodelprior.middlewares=web-sotodelprior-wwwredir"
+      - "traefik.http.routers.web-sotodelprior.tls=true"
+      - "traefik.http.routers.web-sotodelprior.tls.certresolver=le"
       # Servicio
-      - "traefik.http.services.sotoweb-main.loadbalancer.server.port=3000"
+      - "traefik.http.services.web-sotodelprior.loadbalancer.server.port=3000"
       # Redirect HTTP -> HTTPS
-      - "traefik.http.routers.sotoweb-main-http.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
-      - "traefik.http.routers.sotoweb-main-http.entrypoints=web"
-      - "traefik.http.routers.sotoweb-main-http.middlewares=redirect-to-https"
+      - "traefik.http.routers.web-sotodelprior-http.rule=Host(`sotodelprior.com`) || Host(`www.sotodelprior.com`)"
+      - "traefik.http.routers.web-sotodelprior-http.entrypoints=web"
+      - "traefik.http.routers.web-sotodelprior-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"

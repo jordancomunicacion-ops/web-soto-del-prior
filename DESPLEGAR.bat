@@ -65,7 +65,7 @@ echo    Ultimo commit desplegado:
 ssh %REMOTE_USER%@%REMOTE_HOST% "cd %REMOTE_PATH% && git log --oneline -1"
 echo.
 echo [2/4] Liberando disco antes del build (evita 'no space left on device')...
-ssh %REMOTE_USER%@%REMOTE_HOST% "docker image prune -f || true; docker builder prune -f --filter until=72h || true; df -h $(docker info --format '{{.DockerRootDir}}') || true"
+ssh %REMOTE_USER%@%REMOTE_HOST% "d=$(docker info --format '{{.DockerRootDir}}'); libre=$(df -BG --output=avail $d | tail -1 | tr -dc '0-9'); echo '    espacio libre (GB):' $libre; if [ ${libre:-0} -lt 20 ]; then echo '    por debajo de 20G: purga completa de la cache de build'; docker builder prune -af || true; else docker builder prune -f --filter until=72h || true; fi; docker image prune -f || true; df -h $d || true"
 echo.
 echo [3/4] Copia de la BD SQLite ANTES del build...
 REM Las migraciones van dentro de la imagen: si la version nueva toca el schema,

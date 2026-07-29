@@ -16,11 +16,20 @@ services:
       - NODE_ENV=production
       - AUTH_TRUST_HOST=true
       - NEXTAUTH_URL=https://www.sotodelprior.com
-      - NEXTAUTH_SECRET=changeme123unused
-      # Obrador (fuente de verdad del catálogo y pedidos). Clave de integración
-      # del local; se puede rotar desde Obrador → Ajustes → Integración.
+      # Los dos secretos salen del .env del servidor (fuera de git desde
+      # ce0fc3ac) y no de aquí: este repo es PÚBLICO y la OBRADOR_API_KEY estaba
+      # en claro en este fichero, así que cualquiera podía leerla. El guard `:?`
+      # hace que el stack no arranque si falta la variable, en vez de levantar la
+      # web con una integración muda.
+      #
+      # OJO: sacarlas de aquí no las des-expone. Siguen en el historial público
+      # (gitleaks las encuentra en 8d212ab2 y dacc4ca5), así que hay que ROTAR:
+      # la de Obrador desde Obrador → Ajustes → Integración, y después
+      # actualizar solo el .env del servidor.
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:?falta NEXTAUTH_SECRET en el .env del servidor}
+      # Obrador es la fuente de verdad del catálogo y los pedidos.
       - OBRADOR_API_URL=https://obrador.oteyzerena.com
-      - OBRADOR_API_KEY=mUdP1cDdLfEQkb7b9tykP2XZllpqKKWl
+      - OBRADOR_API_KEY=${OBRADOR_API_KEY:?falta OBRADOR_API_KEY en el .env del servidor}
     volumes:
       - ./db_data:/app/db
     networks:

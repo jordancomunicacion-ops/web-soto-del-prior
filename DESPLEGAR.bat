@@ -141,9 +141,20 @@ echo.
 echo ============================================================
 echo   [ERROR] Operacion fallida en %APP_NAME%. Revisa la salida.
 echo.
-echo   Si fallo el git pull: el servidor puede tener cambios
-echo   locales. Entra por SSH (opcion 8) y ejecuta:
-echo       cd %REMOTE_PATH% ^&^& git stash ^&^& git pull origin main
+echo   Si fallo el git pull: el servidor tiene cambios locales.
+echo.
+echo   NO ejecutes 'git stash' a ciegas: puede descartar un secreto
+echo   rotado en el servidor que no este en git. Compara primero.
+echo.
+echo   Entra por SSH (opcion 8) y mira QUE fichero es:
+echo       cd %REMOTE_PATH%   ^&^&   git status --porcelain
+echo.
+echo   Si es .env o env.enc, compara el CONTENIDO, no los bytes:
+echo   env.enc se re-cifra con otro nonce y sale como distinto aunque
+echo   sea identico. Descifra las dos versiones y hazles diff.
+echo.
+echo   Contenido igual    -^> git checkout -- ^<fichero^> y repite el pull.
+echo   Contenido distinto -^> manda el servidor: commitea SU version.
 echo ============================================================
 pause
 goto menu

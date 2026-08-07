@@ -121,10 +121,15 @@ export default async function Home() {
               Desconectar para reconectar. Madera, piedra y vistas a la sierra.
               Una estancia de lujo rural donde el único ruido es el viento.
             </p>
-            {/* Hotel Booking Widget Placeholder (Inline) */}
-            <div className="booking-widget-container">
-              <div id="soto-hotel-booking-widget" data-hotel="55f8cc33-9e75-49b4-9501-c55e528a82ce" data-mode="inline"></div>
+            {/* Booking Trigger Link. El motor va en popup, no inline: el panel
+                mide 100vh con overflow:hidden y el iframe del motor no cabe,
+                así que inline recortaba el widget por abajo. */}
+            <div className="booking-widget-container" style={{ marginTop: '2rem' }}>
+              <a href="#" className="btn-link soto-hotel-widget-trigger" style={{ width: 'fit-content', padding: '1rem 2rem' }}>
+                RESERVAR ESTANCIA
+              </a>
             </div>
+            <div id="soto-hotel-booking-widget" data-hotel="55f8cc33-9e75-49b4-9501-c55e528a82ce" data-mode="popup"></div>
           </div>
         </section>
 

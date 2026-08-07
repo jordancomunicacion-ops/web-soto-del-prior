@@ -793,13 +793,6 @@ h3 {
         flex-direction: column;
     }
 
-    /* FIX: BOOKING WIDGET ON MOBILE */
-    .booking-widget-container iframe {
-        height: 400px;
-        /* Reduce height from 600px */
-        max-height: 50vh;
-    }
-
     /* FIX: HIDE IMAGE IN OBRADOR (REGALA) SECTION ON MOBILE */
     #obrador .split-visual {
         display: none;
